@@ -41,8 +41,7 @@ steps:
       from_secret: server_password
     port: 22
     script:
-    - echo hello
-    - echo world
+    - docker run -p 8080:8080 lingmhuany/cloud-native-practice-hello-world
 
 volumes:
 - name: cache
