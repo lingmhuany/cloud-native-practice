@@ -34,6 +34,7 @@ steps:
 - name: deploy
   image: appleboy/drone-ssh
   settings:
+    host: 47.100.191.229
     username:
       from_secret: server_username
     password:
