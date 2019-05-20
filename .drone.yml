@@ -41,6 +41,7 @@ steps:
     port: 22
     script:
     - echo hello
+    - echo world
 
 volumes:
 - name: cache
