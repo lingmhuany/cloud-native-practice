@@ -52,6 +52,59 @@ volumes:
 
 ---
 kind: pipeline
+name: gateway
+
+steps:
+- name: test
+  image: maven
+  commands:
+  - cd gateway
+  - mvn test
+  volumes:
+  - name: cache
+    path: /root/.m2
+
+- name: build
+  image: maven
+  commands:
+  - cd gateway
+  - mvn package
+  volumes:
+  - name: cache
+    path: /root/.m2
+
+- name: publish
+  image: plugins/docker
+  settings:
+    dockerfile: gateway/Dockerfile
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_password
+    repo: lingmhuany/cloud-native-practice-gateway
+    tags: latest
+
+- name: deploy
+  image: appleboy/drone-ssh
+  settings:
+    host: 47.100.191.229
+    username:
+      from_secret: server_username
+    password:
+      from_secret: server_password
+    port: 22
+    script:
+    - docker stop gateway
+    - docker rm gateway
+    - docker run --name=gateway -d -p 80:80 lingmhuany/cloud-native-practice-gateway
+
+volumes:
+- name: cache
+  host:
+    path: /home/cache/.m2
+
+---
+kind: pipeline
 name: greeting
 
 steps:
