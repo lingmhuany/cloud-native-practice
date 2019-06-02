@@ -52,6 +52,59 @@ volumes:
 
 ---
 kind: pipeline
+name: greeting
+
+steps:
+- name: test
+  image: maven
+  commands:
+  - cd greeting
+  - mvn test
+  volumes:
+  - name: cache
+    path: /root/.m2
+
+- name: build
+  image: maven
+  commands:
+  - cd greeting
+  - mvn package
+  volumes:
+  - name: cache
+    path: /root/.m2
+
+- name: publish
+  image: plugins/docker
+  settings:
+    dockerfile: greeting/Dockerfile
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_password
+    repo: lingmhuany/cloud-native-practice-greeting
+    tags: latest
+
+- name: deploy
+  image: appleboy/drone-ssh
+  settings:
+    host: 47.100.191.229
+    username:
+      from_secret: server_username
+    password:
+      from_secret: server_password
+    port: 22
+    script:
+    - docker stop greeting
+    - docker rm greeting
+    - docker run --name=greeting -d -p 8082:8082 lingmhuany/cloud-native-practice-greeting
+
+volumes:
+- name: cache
+  host:
+    path: /home/cache/.m2
+
+---
+kind: pipeline
 name: hello-world
 
 steps:
