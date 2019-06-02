@@ -1,4 +1,57 @@
 kind: pipeline
+name: eureka
+
+steps:
+- name: test
+  image: maven
+  commands:
+  - cd eureka
+  - mvn test
+  volumes:
+  - name: cache
+    path: /root/.m2
+
+- name: build
+  image: maven
+  commands:
+  - cd eureka
+  - mvn package
+  volumes:
+  - name: cache
+    path: /root/.m2
+
+- name: publish
+  image: plugins/docker
+  settings:
+    dockerfile: eureka/Dockerfile
+    username:
+      from_secret: dockerhub_username
+    password:
+      from_secret: dockerhub_password
+    repo: lingmhuany/cloud-native-practice-eureka
+    tags: latest
+
+- name: deploy
+  image: appleboy/drone-ssh
+  settings:
+    host: 47.100.191.229
+    username:
+      from_secret: server_username
+    password:
+      from_secret: server_password
+    port: 22
+    script:
+    - docker stop eureka
+    - docker rm eureka
+    - docker run --name=eureka -d -p 8081:8081 lingmhuany/cloud-native-practice-eureka
+
+volumes:
+- name: cache
+  host:
+    path: /home/cache/.m2
+
+---
+kind: pipeline
 name: hello-world
 
 steps:
@@ -43,7 +96,7 @@ steps:
     script:
     - docker stop hello-world
     - docker rm hello-world
-    - docker run --name=hello-world -d -p 8080:8080 lingmhuany/cloud-native-practice-hello-world
+    - docker run --name=hello-world -d -p 8083:8083 lingmhuany/cloud-native-practice-hello-world
 
 volumes:
 - name: cache
