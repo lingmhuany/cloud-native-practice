@@ -46,7 +46,7 @@ steps:
     - docker stop eureka
     - docker rm eureka
     - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
-    - docker run --name=eureka -d -p 8081:8081 lingmhuany/cloud-native-practice-eureka
+    - docker run --name=eureka -d -p 8081:8081 registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
 
 volumes:
 - name: cache
@@ -102,7 +102,7 @@ steps:
     - docker stop gateway
     - docker rm gateway
     - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
-    - docker run --name=gateway -d -p 80:80 lingmhuany/cloud-native-practice-gateway
+    - docker run --name=gateway -d -p 80:80 registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
 
 volumes:
 - name: cache
@@ -158,7 +158,7 @@ steps:
     - docker stop greeting
     - docker rm greeting
     - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
-    - docker run --name=greeting -d -p 8082:8082 lingmhuany/cloud-native-practice-greeting
+    - docker run --name=greeting -d -p 8082:8082 registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
 
 volumes:
 - name: cache
@@ -214,7 +214,7 @@ steps:
     - docker stop hello-world
     - docker rm hello-world
     - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-hello-world
-    - docker run --name=hello-world -d -p 8083:8083 lingmhuany/cloud-native-practice-hello-world
+    - docker run --name=hello-world -d -p 8083:8083 registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-hello-world
 
 volumes:
 - name: cache
