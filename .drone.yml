@@ -45,7 +45,7 @@ steps:
     script:
     - docker stop eureka
     - docker rm eureka
-    - docker pull lingmhuany/cloud-native-practice-eureka
+    - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
     - docker run --name=eureka -d -p 8081:8081 lingmhuany/cloud-native-practice-eureka
 
 volumes:
@@ -101,7 +101,7 @@ steps:
     script:
     - docker stop gateway
     - docker rm gateway
-    - docker pull lingmhuany/cloud-native-practice-gateway
+    - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
     - docker run --name=gateway -d -p 80:80 lingmhuany/cloud-native-practice-gateway
 
 volumes:
@@ -157,7 +157,7 @@ steps:
     script:
     - docker stop greeting
     - docker rm greeting
-    - docker pull lingmhuany/cloud-native-practice-greeting
+    - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
     - docker run --name=greeting -d -p 8082:8082 lingmhuany/cloud-native-practice-greeting
 
 volumes:
@@ -213,7 +213,7 @@ steps:
     script:
     - docker stop hello-world
     - docker rm hello-world
-    - docker pull lingmhuany/cloud-native-practice-hello-world
+    - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-hello-world
     - docker run --name=hello-world -d -p 8083:8083 lingmhuany/cloud-native-practice-hello-world
 
 volumes:
