@@ -25,10 +25,11 @@ steps:
   settings:
     dockerfile: eureka/Dockerfile
     username:
-      from_secret: dockerhub_username
+      from_secret: aliyun_registry_username
     password:
-      from_secret: dockerhub_password
-    repo: lingmhuany/cloud-native-practice-eureka
+      from_secret: aliyun_registry_password
+    repo: registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
+    registry: registry.cn-hangzhou.aliyuncs.com
     tags: latest
 
 - name: deploy
@@ -40,9 +41,11 @@ steps:
     password:
       from_secret: server_password
     port: 22
+    command_timeout: 120m
     script:
     - docker stop eureka
     - docker rm eureka
+    - docker pull lingmhuany/cloud-native-practice-eureka
     - docker run --name=eureka -d -p 8081:8081 lingmhuany/cloud-native-practice-eureka
 
 volumes:
@@ -78,10 +81,11 @@ steps:
   settings:
     dockerfile: gateway/Dockerfile
     username:
-      from_secret: dockerhub_username
+      from_secret: aliyun_registry_username
     password:
-      from_secret: dockerhub_password
-    repo: lingmhuany/cloud-native-practice-gateway
+      from_secret: aliyun_registry_password
+    repo: registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
+    registry: registry.cn-hangzhou.aliyuncs.com
     tags: latest
 
 - name: deploy
@@ -93,9 +97,11 @@ steps:
     password:
       from_secret: server_password
     port: 22
+    command_timeout: 120m
     script:
     - docker stop gateway
     - docker rm gateway
+    - docker pull lingmhuany/cloud-native-practice-gateway
     - docker run --name=gateway -d -p 80:80 lingmhuany/cloud-native-practice-gateway
 
 volumes:
@@ -131,10 +137,11 @@ steps:
   settings:
     dockerfile: greeting/Dockerfile
     username:
-      from_secret: dockerhub_username
+      from_secret: aliyun_registry_username
     password:
-      from_secret: dockerhub_password
-    repo: lingmhuany/cloud-native-practice-greeting
+      from_secret: aliyun_registry_password
+    repo: registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
+    registry: registry.cn-hangzhou.aliyuncs.com
     tags: latest
 
 - name: deploy
@@ -146,9 +153,11 @@ steps:
     password:
       from_secret: server_password
     port: 22
+    command_timeout: 120m
     script:
     - docker stop greeting
     - docker rm greeting
+    - docker pull lingmhuany/cloud-native-practice-greeting
     - docker run --name=greeting -d -p 8082:8082 lingmhuany/cloud-native-practice-greeting
 
 volumes:
@@ -184,10 +193,11 @@ steps:
   settings:
     dockerfile: hello-world/Dockerfile
     username:
-      from_secret: dockerhub_username
+      from_secret: aliyun_registry_username
     password:
-      from_secret: dockerhub_password
-    repo: lingmhuany/cloud-native-practice-hello-world
+      from_secret: aliyun_registry_password
+    repo: registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-hello-world
+    registry: registry.cn-hangzhou.aliyuncs.com
     tags: latest
 
 - name: deploy
@@ -199,9 +209,11 @@ steps:
     password:
       from_secret: server_password
     port: 22
+    command_timeout: 120m
     script:
     - docker stop hello-world
     - docker rm hello-world
+    - docker pull lingmhuany/cloud-native-practice-hello-world
     - docker run --name=hello-world -d -p 8083:8083 lingmhuany/cloud-native-practice-hello-world
 
 volumes:
