@@ -28,8 +28,8 @@ steps:
       from_secret: aliyun_registry_username
     password:
       from_secret: aliyun_registry_password
-    repo: registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
-    registry: registry.cn-hangzhou.aliyuncs.com
+    repo: registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
+    registry: registry-vpc.cn-shanghai.aliyuncs.com
     tags: latest
 
 - name: deploy
@@ -45,8 +45,8 @@ steps:
     script:
     - docker stop eureka
     - docker rm eureka
-    - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
-    - docker run --name=eureka -d -p 8081:8081 registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
+    - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
+    - docker run --name=eureka -d -p 8081:8081 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
 
 volumes:
 - name: cache
@@ -84,8 +84,8 @@ steps:
       from_secret: aliyun_registry_username
     password:
       from_secret: aliyun_registry_password
-    repo: registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
-    registry: registry.cn-hangzhou.aliyuncs.com
+    repo: registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
+    registry: registry-vpc.cn-shanghai.aliyuncs.com
     tags: latest
 
 - name: deploy
@@ -101,8 +101,8 @@ steps:
     script:
     - docker stop gateway
     - docker rm gateway
-    - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
-    - docker run --name=gateway -d -p 80:80 registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
+    - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
+    - docker run --name=gateway -d -p 80:80 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
 
 volumes:
 - name: cache
@@ -140,8 +140,8 @@ steps:
       from_secret: aliyun_registry_username
     password:
       from_secret: aliyun_registry_password
-    repo: registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
-    registry: registry.cn-hangzhou.aliyuncs.com
+    repo: registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
+    registry: registry-vpc.cn-shanghai.aliyuncs.com
     tags: latest
 
 - name: deploy
@@ -157,8 +157,8 @@ steps:
     script:
     - docker stop greeting
     - docker rm greeting
-    - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
-    - docker run --name=greeting -d -p 8082:8082 registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
+    - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
+    - docker run --name=greeting -d -p 8082:8082 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
 
 volumes:
 - name: cache
@@ -196,8 +196,8 @@ steps:
       from_secret: aliyun_registry_username
     password:
       from_secret: aliyun_registry_password
-    repo: registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-hello-world
-    registry: registry.cn-hangzhou.aliyuncs.com
+    repo: registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-hello-world
+    registry: registry-vpc.cn-shanghai.aliyuncs.com
     tags: latest
 
 - name: deploy
@@ -213,8 +213,64 @@ steps:
     script:
     - docker stop hello-world
     - docker rm hello-world
-    - docker pull registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-hello-world
-    - docker run --name=hello-world -d -p 8083:8083 registry.cn-hangzhou.aliyuncs.com/lingmhuany/cloud-native-practice-hello-world
+    - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-hello-world
+    - docker run --name=hello-world -d -p 8083:8083 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-hello-world
+
+volumes:
+- name: cache
+  host:
+    path: /home/cache/.m2
+
+---
+kind: pipeline
+name: auth
+
+steps:
+- name: test
+  image: maven
+  commands:
+  - cd auth
+  - mvn test
+  volumes:
+  - name: cache
+    path: /root/.m2
+
+- name: build
+  image: maven
+  commands:
+  - cd auth
+  - mvn package
+  volumes:
+  - name: cache
+    path: /root/.m2
+
+- name: publish
+  image: plugins/docker
+  settings:
+    dockerfile: auth/Dockerfile
+    username:
+      from_secret: aliyun_registry_username
+    password:
+      from_secret: aliyun_registry_password
+    repo: registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-auth
+    registry: registry-vpc.cn-shanghai.aliyuncs.com
+    tags: latest
+
+- name: deploy
+  image: appleboy/drone-ssh
+  settings:
+    host: 47.100.191.229
+    username:
+      from_secret: server_username
+    password:
+      from_secret: server_password
+    port: 22
+    command_timeout: 120m
+    script:
+    - docker stop auth
+    - docker rm auth
+    - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-auth
+    - docker run --name=auth -d -p 8084:8084 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-auth
 
 volumes:
 - name: cache

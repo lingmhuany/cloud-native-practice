@@ -1,0 +1,23 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: auth
+  datasource:
+    username: root
+    password: 1111
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.100.191.229:3306/auth?serverTimezone=UTC
+  jpa:
+    hibernate:
+      ddl-auto: update
+  redis:
+    host: 47.100.191.229
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.100.191.229:8081/eureka/
+  instance:
+    prefer-ip-address: true
