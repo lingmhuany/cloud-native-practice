@@ -4,26 +4,22 @@ server:
 spring:
   application:
     name: gateway
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      routes:
-      - id: auth
-        uri: lb://auth
-        predicates:
-        - Path=/auth/**
-        filters:
-        - StripPrefix=1
-      - id: greeting
-        uri: lb://greeting
-        predicates:
-        - Path=/greeting/**
-        filters:
-        - StripPrefix=1
-  redis:
-    host: 47.100.191.229
+
+zuul:
+  routes:
+    greeting:
+      service-id: greeting
+      path: /greeting/**
+    rainbow:
+      service-id: rainbow
+      path: /rainbow/**
+    auth:
+      service-id: auth
+      path: /auth/**
+    frontend:
+      service-id: frontend
+      path: /**
+  sensitive-headers: Cookie, Set-Cookie
 
 eureka:
   client:
@@ -31,3 +27,9 @@ eureka:
       defaultZone: http://47.100.191.229:8081/eureka/
   instance:
     prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

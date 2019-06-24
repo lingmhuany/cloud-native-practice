@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
     <groupId>ling</groupId>
-    <artifactId>cloud-native-practice-eureka</artifactId>
+    <artifactId>cloud-native-practice-rainbow</artifactId>
     <version>0.1.0</version>
 
 	<parent>
@@ -39,12 +39,32 @@
 			<version>1.1.1</version>
 		</dependency>
 		<!-- jaxb模块引用 - end -->
+		
+		<dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>2.1.1.RELEASE</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 			<version>2.1.1.RELEASE</version>
 		</dependency>
+		
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180813</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
 
 		<dependency>
             <groupId>org.springframework.boot</groupId>

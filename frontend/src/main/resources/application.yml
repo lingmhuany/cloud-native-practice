@@ -1,0 +1,17 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: frontend
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://47.100.191.229:8081/eureka/
+  instance:
+    prefer-ip-address: true
+
+feign:
+  hystrix:
+    enabled: true
