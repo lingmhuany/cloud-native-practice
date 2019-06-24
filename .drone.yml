@@ -48,6 +48,7 @@ volumes:
 kind: pipeline
 name: gateway
 
+steps:
 - name: build
   image: maven
   commands:
