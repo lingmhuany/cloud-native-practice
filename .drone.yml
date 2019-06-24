@@ -36,6 +36,7 @@ steps:
     script:
     - docker stop eureka
     - docker rm eureka
+    - docker image rm registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
     - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
     - docker run --name=eureka -d -p 8081:8081 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-eureka
 
@@ -83,6 +84,7 @@ steps:
     script:
     - docker stop gateway
     - docker rm gateway
+    - docker image rm registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
     - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
     - docker run --name=gateway -d -p 80:80 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-gateway
 
@@ -130,6 +132,7 @@ steps:
     script:
     - docker stop greeting
     - docker rm greeting
+    - docker image rm registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
     - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
     - docker run --name=greeting -d -p 8082:8082 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-greeting
 
@@ -177,6 +180,7 @@ steps:
     script:
     - docker stop rainbow
     - docker rm rainbow
+    - docker image rm registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-rainbow
     - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-rainbow
     - docker run --name=rainbow -d -p 8083:8083 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-rainbow
 
@@ -224,6 +228,7 @@ steps:
     script:
     - docker stop auth
     - docker rm auth
+    - docker image rm registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-auth
     - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-auth
     - docker run --name=auth -d -p 8084:8084 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-auth
 
@@ -271,6 +276,7 @@ steps:
     script:
     - docker stop frontend
     - docker rm frontend
+    - docker image rm registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-frontend
     - docker pull registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-frontend
     - docker run --name=frontend -d -p 8085:8085 registry-vpc.cn-shanghai.aliyuncs.com/lingmhuany/cloud-native-practice-frontend
 
