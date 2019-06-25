@@ -1,7 +1,7 @@
 # Cloud Native Practice
 
 ## Introduction
-This is a group project practice of cloud native. We propose to refactor an attendance management system into a cloud-native application.
+This is a group project practice of cloud native. We built a love word generator.
 
 ## CI/CD
 47.100.191.229:8000 Drone
@@ -18,6 +18,8 @@ This is a group project practice of cloud native. We propose to refactor an atte
 47.100.191.229:3306 MySQL
 47.100.191.229:6379 Redis
 
+## Structure
+![Structure](Structure.png)
 
 ## Coding Standard
 [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
